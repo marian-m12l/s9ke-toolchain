@@ -50,6 +50,7 @@ Links to the reference documentation from SONiX:
 #### I/O Registers
 
 | Label           | Description                 | Offset |
+| --------------- | --------------------------- | ------ |
 | SSF             | System Status Flag          | 0x00 |
 | SCR             | System Control              | 0x01 |
 | Ix0             | Indirect Addressing x0      | 0x02 |
