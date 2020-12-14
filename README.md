@@ -1,5 +1,5 @@
-Toolchain for SONiX S9KE DSP Core
-=================================
+A toolchain for SONiX S9KE DSP Core
+===================================
 
 This repository hosts a series of tools targeting the S9KE DSP core, which is shared by several SONiX SoCs like SNC7001A or SNP70032.
 
@@ -202,3 +202,10 @@ When executing an instruction, the emulator prints:
 - The assembly mnemonic
 - A potential EOL comment
 - Any change happening to the internal registers, I/O registers, WRAM, Flags, ...
+
+
+LICENSE
+-------
+
+This project is licensed under the terms of the **Mozilla Public License 2.0**. The terms of the license are in
+the `LICENSE` file.
