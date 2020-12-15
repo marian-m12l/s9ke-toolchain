@@ -10,15 +10,9 @@ import sys
 import re
 from math import copysign
 
-#FW = '/home/marian/Bureau/Perso/SYS.BIN'
-
-#FW = '/home/marian/Bureau/Perso/FW_2_6/FA.BIN'
-#FW = '/home/marian/Bureau/Perso/FW_2_6/FU.BIN'
-#FW = '/home/marian/Bureau/Perso/FW_2_6/SYS_from_rom.BIN'
-FW = '/home/marian/Bureau/Perso/FW_2_6/rom_2_6.bin'
+FW = '../FW_2_6/rom_2_6.bin'
 
 
-# TODO Emulator state
 # Internal registers
 internal = {
     'X0': 0x0000,
@@ -159,8 +153,6 @@ WRAM = [0x0000] * 0x4000
 PRAM200000 = [0x0000] * 0x3000
 # Entire ROM is loaded into External Program Memory (0x400000-0xbfffff)
 CS1ROM = [0x0000] * 0x800000
-
-# TODO function to dump registers and ram ?
 
 
 
@@ -504,7 +496,7 @@ def setRegisterFromROM(regName, indirectRegName, modif):
         internal[regName] =  CS1ROM[offset - 0x400000]
     else:
         # TODO ???
-        print_error('Cannot read ROM at address address %s' % hex(offset, 6))
+        print_error('Cannot read ROM at address %s' % hex(offset, 6))
         raise
     print_execution(f"Register {bcolors.REGVAL}{regName}{bcolors.ENDC}{bcolors.EXECUTION} set by {bcolors.ROM}ROM({hex(offset, 6)}){bcolors.ENDC}{bcolors.EXECUTION} to {bcolors.REGVAL}{hex(internal[regName], 4)}{bcolors.ENDC}{bcolors.EXECUTION}")
     incrementIndexRegister(indirectRegName, modif)
@@ -907,7 +899,7 @@ def conditionMatched(cond):
 # Open file
 address = 0
 with open(FW, 'rb') as f:
-    # FIXME Load complete rom in CS1ROM
+    # Load complete rom into CS1ROM
     word = f.read(2)
     while word and address < 0x800000:
         high = word[1]
@@ -1151,7 +1143,7 @@ while not quit:
         _f = (low & 0b_0010_0000) >> 5       # 0: r0    1: r1
         sf = (low & 0b_0001_1000) >> 3       # 00: Shift Left Sign Extension    01: A/L Shift Left  10: A Shift Right   11: L Shift Right
         mnemonic = shift(sf)
-        # FIXME: Number of bits to shift is determined by the ShIdx I/O (0x003e)
+        # Number of bits to shift is determined by the ShIdx I/O (0x003e)
         print_instruction(PC*2, 'R%s = %s.Idx %s' % (_f, mnemonic, register(reg)), '', True)
         computeShiftWithIndex('R%s' % _f, sf, register(reg))
         incrementPC()
@@ -1276,7 +1268,6 @@ while not quit:
         abs_addr_high = low
         second_word = getOpCode(PC+1)
         #print('%s %s' % (hex(second_word[0],2), hex(second_word[1],2)))
-        # FIXME Byte order ???
         abs_addr_low = second_word
         abs_addr = (abs_addr_high << 16) | abs_addr_low
         print_instruction(PC*2, 'Callff\t%s' % (hex(abs_addr, 6)), '', True)
@@ -1291,7 +1282,6 @@ while not quit:
         abs_addr_high = low
         second_word = getOpCode(PC+1)
         #print('%s %s' % (hex(second_word[0],2), hex(second_word[1],2)))
-        # FIXME Byte order ???
         abs_addr_low = second_word
         abs_addr = (abs_addr_high << 16) | abs_addr_low
         print_instruction(PC*2, 'Jmpff\t%s' % (hex(abs_addr, 6)), '', True)

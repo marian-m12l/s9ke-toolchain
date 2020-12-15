@@ -6,12 +6,7 @@
 
 import os
 
-#FW = '/home/marian/Bureau/Perso/SYS.BIN'
-
-#FW = '/home/marian/Bureau/Perso/FW_2_6/FA.BIN'
-#FW = '/home/marian/Bureau/Perso/FW_2_6/FU.BIN'
-#FW = '/home/marian/Bureau/Perso/FW_2_6/SYS_from_rom.BIN'
-FW = '/home/marian/Bureau/Perso/FW_2_6/rom_2_6.bin'
+FW = '../FW_2_6/rom_2_6.bin'
 
 def hex(val, digits):
     return "{0:#0{1}x}".format(val, digits+2)
@@ -210,11 +205,8 @@ def print_instruction(address, instr, comment='', wip=False):
 address = 0
 with open(FW, 'rb') as f:
     word = f.read(2)
-    # TODO Print EOL comments to explain each operation
-    # TODO Use I/O labels when possible (at least in comments?)
     # TODO Check 3.2.3. Special Registers (IO SPACE) of DSP to determine bit numbering regarding high/low bytes ???
     while word:
-        # FIXME Byte order ???
         high = word[1]
         low = word[0]
         #print('%s %s' % (hex(high,2), hex(low,2)))
@@ -328,7 +320,7 @@ with open(FW, 'rb') as f:
             _f = (low & 0b_0010_0000) >> 5       # 0: r0    1: r1
             sf = (low & 0b_0001_1000) >> 3       # 00: Shift Left Sign Extension    01: A/L Shift Left  10: A Shift Right   11: L Shift Right
             mnemonic = shift(sf)
-            # FIXME: Number of bits to shift is determined by the ShIdx I/O (0x003e)
+            # Number of bits to shift is determined by the ShIdx I/O (0x003e)
             print_instruction(address, 'R%s = %s.Idx %s' % (_f, mnemonic, register(reg)), '', True)
         # I/O (1)
         elif ((high >> 3) & 0b_0001_1111) == 0b_11100 and ((low >> 7) & 0b_0000_0001) == 0b_1:
@@ -433,7 +425,6 @@ with open(FW, 'rb') as f:
             abs_addr_high = low
             second_word = f.read(2)
             #print('%s %s' % (hex(second_word[0],2), hex(second_word[1],2)))
-            # FIXME Byte order ???
             abs_addr_low = (second_word[1] << 8) | second_word[0]
             abs_addr = (abs_addr_high << 16) | abs_addr_low
             print_instruction(address, 'Callff\t%s' % (hex(abs_addr, 6)), '', True)
@@ -443,7 +434,6 @@ with open(FW, 'rb') as f:
             abs_addr_high = low
             second_word = f.read(2)
             #print('%s %s' % (hex(second_word[0],2), hex(second_word[1],2)))
-            # FIXME Byte order ???
             abs_addr_low = (second_word[1] << 8) | second_word[0]
             abs_addr = (abs_addr_high << 16) | abs_addr_low
             print_instruction(address, 'Jmpff\t%s' % (hex(abs_addr, 6)), '', True)
