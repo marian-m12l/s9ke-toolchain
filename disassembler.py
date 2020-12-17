@@ -231,9 +231,9 @@ with open(FW, 'rb') as f:
             reg = high & 0b_0000_0111
             offset = (hash << 8) | low
             if r:
-                print_instruction(address, '%s = DM(%s)' % (register(reg), hex(offset, 2)), '', True)
+                print_instruction(address, '%s = DM(%s)' % (register(reg), hex(offset, 3)), '', True)
             else:
-                print_instruction(address, 'DM(%s) = %s' % (hex(offset, 2), register(reg)), '', True)
+                print_instruction(address, 'DM(%s) = %s' % (hex(offset, 3), register(reg)), '', True)
         # Load Immediate
         elif ((high >> 5) & 0b_0000_0111) == 0b_110 and ((high >> 3) & 0b_0000_0011) != 0b_01:
             L = (high & 0b_0001_1000) >> 3       # L=00: Load High, Keep Low     L=10: Keep High, Load Low       L=11: Clear High, Load Low

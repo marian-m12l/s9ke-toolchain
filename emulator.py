@@ -1038,10 +1038,10 @@ while not quit:
         reg = high & 0b_0000_0111
         offset = (hash << 8) | low
         if r:
-            print_instruction(PC*2, '%s = DM(%s)' % (register(reg), hex(offset, 2)), '', True)
+            print_instruction(PC*2, '%s = DM(%s)' % (register(reg), hex(offset, 3)), '', True)
             setRegisterFromRAMDirect(register(reg), offset)
         else:
-            print_instruction(PC*2, 'DM(%s) = %s' % (hex(offset, 2), register(reg)), '', True)
+            print_instruction(PC*2, 'DM(%s) = %s' % (hex(offset, 3), register(reg)), '', True)
             setRAMFromRegisterDirect(offset, register(reg))
         incrementPC()
     # Load Immediate
