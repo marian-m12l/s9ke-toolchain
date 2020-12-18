@@ -206,6 +206,19 @@ When executing an instruction, the emulator prints:
 - Any change happening to the internal registers, I/O registers, WRAM, Flags, ...
 
 
+### Assembler
+
+The assembler takes two arguments: the path to the source `.asm` file and the path to the output binary file:
+
+```
+assembler.py source.asm target.bin
+```
+
+There is a `test.asm` file that covers (almost) all instructions, and show how to use labels and "seek" guidelines.
+
+**PLEASE NOTE THAT NO ASSEMBLED BINARY HAS BEEN TESTED ON AN ACTUAL DEVICE YET**
+
+
 LICENSE
 -------
 

@@ -124,7 +124,6 @@ seek(0x000080)
     R1 = SL.Idx MR0
     R1 = IO(0x02)
     IO(0x7f) = X0
-    ; TODO AU1
     X0 = R0 + 1
     X1 = X1 - 1
     Y0 = R1 + Y1
